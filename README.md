@@ -42,11 +42,11 @@ Adopting and adapting these architectural principles in Haskell aligns well with
 ---
 
 ## Package Structure
-![Package Structure](https://github.com/phoityne/pmc-domain-model/blob/main/docs/05-1.png?raw=true)
+![Package Structure](https://github.com/phoityne/pms-domain-model/blob/main/docs/51-1.png?raw=true)
 
 ---
 
 ## Module Structure
-![Package Structure](https://github.com/phoityne/pmc-domain-model/blob/main/docs/05-2.png?raw=true)
+![Package Structure](https://github.com/phoityne/pms-domain-model/blob/main/docs/51-2.png?raw=true)
 
 ---
