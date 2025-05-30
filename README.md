@@ -2,7 +2,7 @@
 
 ## Positioning of pms-domain-model in the pty-mcp-server Project
 
-`pms-domain-model` is a core internal package within the `pty-mcp-server` project. It defines the essential domain types — such as value objects, identifiers, parameters, and domain-specific data structures — that precisely capture the semantics of the problem domain.
+`pms-domain-model` is a core internal package within the [`pty-mcp-server`](https://github.com/phoityne/pty-mcp-server) project. It defines the essential domain types — such as value objects, identifiers, parameters, and domain-specific data structures — that precisely capture the semantics of the problem domain.
 
 The package does **not** contain any implementation of behavior, business logic, or state management. Instead, it is strictly responsible for representing the domain context as **purely declarative data**. This clear separation ensures that domain semantics are explicitly encoded and remain stable, independent of application workflows or infrastructure concerns.
 
