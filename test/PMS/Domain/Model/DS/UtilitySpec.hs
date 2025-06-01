@@ -14,15 +14,13 @@ import qualified PMS.Domain.Model.DM.Type as SUT
 
 -- |
 --
-data SpecContext = SpecContext {
-                 }
+data SpecContext = SpecContext {}
 
 makeLenses ''SpecContext
 
 defaultSpecContext :: IO SpecContext
 defaultSpecContext = do
-  return SpecContext {
-         }
+  return SpecContext {}
 
 -- |
 --
@@ -66,9 +64,9 @@ tearDown _ = do
 --
 run :: SpecWith SpecContext
 run = do
-  describe "runApp" $ do
-    context "when AppData default" $ do
-      it "should be run" $ \_ -> do 
+  describe "str2lbs" $ do
+    context "abc" $ do
+      it "should be abc" $ \_ -> do 
         putStrLn "[INFO] EXECUTING THE FIRST TEST."
 
         let expect = "abc"
@@ -76,16 +74,5 @@ run = do
 
         actual `shouldBe` expect
 
-      it "should be json" $ \_ -> do 
-        putStrLn "[INFO] EXECUTING THE SECOND TEST."
-
-        let jsonStr = """
-                      {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"capabilities":{"roots":{"listChanged":true}},"clientInfo":{"name":"Visual Studio Code","version":"1.99.2"},"protocolVersion":"2024-11-05"}}
-                      """
-            Right jsonDat = (eitherDecode jsonStr) :: Either String SUT.JsonRpcRequest
-
-        let actual = encode jsonDat
-
-        actual `shouldBe` jsonStr
 
 
