@@ -26,7 +26,7 @@ version:            0.0.1.0
 synopsis:           pms-domain-model
 
 -- A longer description of the package.
--- description:
+description:        README.md
 
 -- The license under which the package is released.
 license:            Apache-2.0
@@ -44,6 +44,8 @@ maintainer:         phoityne.hs@gmail.com
 copyright:          2025-2026 phoityne.hs@gmail.com
 category:           AI
 build-type:         Simple
+homepage:           https://github.com/phoityne/pms-domain-model
+bug-reports:        https://github.com/phoityne/pms-domain-model/issues
 
 -- Extra doc files to be distributed with the package, such as a CHANGELOG or a README.
 extra-doc-files:    CHANGELOG.md
