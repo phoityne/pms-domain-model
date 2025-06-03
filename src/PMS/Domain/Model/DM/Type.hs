@@ -465,10 +465,26 @@ data SystemCommandData =
 
 makeLenses ''SystemCommandData
 
+
+-- |
+--
+type EchoCommandCallback a = String -> IO a
+
+-- |
+--
+data EchoCommandData =
+  EchoCommandData {
+    _valueEchoCommandData :: String
+  , _callbackEchoCommandData  :: EchoCommandCallback ()
+  }
+
+makeLenses ''EchoCommandData
+
 -- |
 --
 data Command =
-    PtyConnectCommand PtyConnectCommandData
+    EchoCommand       EchoCommandData
+  | PtyConnectCommand PtyConnectCommandData
   | PtyMessageCommand PtyMessageCommandData
   | SystemCommand     SystemCommandData
 
