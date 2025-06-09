@@ -13,8 +13,10 @@ import Control.Concurrent.STM.TQueue
 import qualified Data.ByteString.Lazy.Char8 as BL
 import Data.Default
 import System.Exit
+import System.IO 
 
 import PMS.Domain.Model.DM.TH
+
 
 --------------------------------------------------------------------------------
 -- |
@@ -506,6 +508,10 @@ makeLenses ''DomainData
 
 defaultDomainData :: IO DomainData
 defaultDomainData = do
+  hSetEncoding stdin  utf8
+  hSetEncoding stdout utf8
+  hSetEncoding stderr utf8
+
   reqQ <- newTQueueIO
   resQ <- newTQueueIO
   cmdQ <- newTQueueIO
