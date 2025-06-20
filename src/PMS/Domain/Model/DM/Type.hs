@@ -675,7 +675,7 @@ data WatchCommand =
 data DomainData = DomainData {
     _logDirDomainData        :: Maybe String
   , _logLevelDomainData      :: LogLevel
-  , _scriptsDirDomainData    :: String
+  , _toolsDirDomainData    :: String
   , _requestQueueDomainData  :: TQueue McpRequest
   , _responseQueueDomainData :: TQueue McpResponse
   , _notificationQueueDomainData :: TQueue McpNotification
@@ -707,7 +707,7 @@ defaultDomainData = do
   return DomainData {
            _logDirDomainData        = Nothing
          , _logLevelDomainData      = LevelDebug
-         , _scriptsDirDomainData    = "./scripts"
+         , _toolsDirDomainData    = "./tools"
          , _requestQueueDomainData  = reqQ
          , _responseQueueDomainData = resQ
          , _notificationQueueDomainData = notQ
