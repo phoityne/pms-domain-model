@@ -117,6 +117,25 @@ defaultJsonRpcResponse req = def {
   , _resultJsonRpcResponse = def
   }
 
+-- |
+--
+data JsonRpcNotification =
+  JsonRpcNotification {
+    _jsonrpcJsonRpcNotification :: String
+  , _methodJsonRpcNotification  :: String
+  , _paramsJsonRpcNotification  :: Maybe RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "JsonRpcNotification", omitNothingFields = True} ''JsonRpcNotification)
+makeLenses ''JsonRpcNotification
+
+instance Default JsonRpcNotification where
+  def = JsonRpcNotification {
+        _jsonrpcJsonRpcNotification = "2.0"
+      , _methodJsonRpcNotification  = def
+      , _paramsJsonRpcNotification  = def
+      }
+
 --------------------------------------------------------------------------------
 
 -- |
@@ -232,6 +251,34 @@ data McpRequest =
   deriving (Show, Read, Eq)
 
 --------------------------------------------------------------------------------
+-- |
+--
+data McpInitializeResponseResultCapabilitiesResources =
+  McpInitializeResponseResultCapabilitiesResources {
+    _subscribedMcpInitializeResponseResultCapabilitiesResources :: Bool
+  , _listChangedMcpInitializeResponseResultCapabilitiesResources :: Bool
+  } deriving (Show, Read, Eq)
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpInitializeResponseResultCapabilitiesResources", omitNothingFields = True} ''McpInitializeResponseResultCapabilitiesResources)
+makeLenses ''McpInitializeResponseResultCapabilitiesResources
+
+instance Default McpInitializeResponseResultCapabilitiesResources where
+  def = McpInitializeResponseResultCapabilitiesResources {
+        _subscribedMcpInitializeResponseResultCapabilitiesResources = def
+      , _listChangedMcpInitializeResponseResultCapabilitiesResources = def
+      }
+
+
+data McpInitializeResponseResultCapabilitiesPrompts =
+  McpInitializeResponseResultCapabilitiesPrompts {
+    _listChangedMcpInitializeResponseResultCapabilitiesPrompts :: Bool
+  } deriving (Show, Read, Eq)
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpInitializeResponseResultCapabilitiesPrompts", omitNothingFields = True} ''McpInitializeResponseResultCapabilitiesPrompts)
+makeLenses ''McpInitializeResponseResultCapabilitiesPrompts
+
+instance Default McpInitializeResponseResultCapabilitiesPrompts where
+  def = McpInitializeResponseResultCapabilitiesPrompts {
+        _listChangedMcpInitializeResponseResultCapabilitiesPrompts = True
+      }
 
 -- |
 --
@@ -252,6 +299,8 @@ instance Default McpInitializeResponseResultCapabilitiesTools where
 data McpInitializeResponseResultCapabilities =
   McpInitializeResponseResultCapabilities {
     _toolsMcpInitializeResponseResultCapabilities :: McpInitializeResponseResultCapabilitiesTools
+  -- , _promptsMcpInitializeResponseResultCapabilities :: McpInitializeResponseResultCapabilitiesPrompts
+  -- , _resourcesMcpInitializeResponseResultCapabilities :: McpInitializeResponseResultCapabilitiesResources
   } deriving (Show, Read, Eq)
 $(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpInitializeResponseResultCapabilities", omitNothingFields = True} ''McpInitializeResponseResultCapabilities)
 makeLenses ''McpInitializeResponseResultCapabilities
@@ -259,6 +308,8 @@ makeLenses ''McpInitializeResponseResultCapabilities
 instance Default McpInitializeResponseResultCapabilities where
   def = McpInitializeResponseResultCapabilities {
         _toolsMcpInitializeResponseResultCapabilities = def
+  --     , _promptsMcpInitializeResponseResultCapabilities = def
+  --     , _resourcesMcpInitializeResponseResultCapabilities = def
       }
 
 -- |
@@ -414,6 +465,45 @@ data McpResponse =
 --------------------------------------------------------------------------------
 -- |
 --
+data McpToolListChangedNotificationDataParams =
+  McpToolListChangedNotificationDataParams {
+    _toolsMcpToolListChangedNotificationDataParams :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpToolListChangedNotificationDataParams", omitNothingFields = True} ''McpToolListChangedNotificationDataParams)
+makeLenses ''McpToolListChangedNotificationDataParams
+
+instance Default McpToolListChangedNotificationDataParams where
+  def = McpToolListChangedNotificationDataParams {
+        _toolsMcpToolListChangedNotificationDataParams = RawJsonByteString "[]"
+      }
+
+-- |
+--
+data McpToolListChangedNotificationData =
+  McpToolListChangedNotificationData {
+    _methodMcpToolListChangedNotificationData  :: String
+  , _paramsMcpToolListChangedNotificationData  :: McpToolListChangedNotificationDataParams
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpToolListChangedNotificationData", omitNothingFields = True} ''McpToolListChangedNotificationData)
+makeLenses ''McpToolListChangedNotificationData
+
+instance Default McpToolListChangedNotificationData where
+  def = McpToolListChangedNotificationData {
+        _methodMcpToolListChangedNotificationData = "notifications/tools/list_changed"
+      , _paramsMcpToolListChangedNotificationData = def
+      }
+
+-- |
+--
+data McpNotification =
+  McpToolListChangedNotification McpToolListChangedNotificationData
+  deriving (Show, Read, Eq)
+
+--------------------------------------------------------------------------------
+-- |
+--
 type PtyConnectCommandCallback a = ExitCode
                                 -> String  -- ^ stdout
                                 -> String  -- ^ stderr
@@ -429,6 +519,25 @@ data PtyConnectCommandData =
   }
 
 makeLenses ''PtyConnectCommandData
+
+-- |
+--
+type PtyTerminateCommandCallback a = ExitCode
+                                -> String  -- ^ stdout
+                                -> String  -- ^ stderr
+                                -> IO a
+
+-- |
+--
+data PtyTerminateCommandData =
+  PtyTerminateCommandData {
+    _namePtyTerminateCommandData :: String
+  , _argumentsPtyTerminateCommandData :: RawJsonByteString
+  , _callbackPtyTerminateCommandData  :: PtyTerminateCommandCallback ()
+  }
+
+makeLenses ''PtyTerminateCommandData
+
 
 -- |
 --
@@ -467,7 +576,18 @@ data SystemCommandData =
 
 makeLenses ''SystemCommandData
 
+{-
+-- |
+--
+data CmdRunCommandData =
+  CmdRunCommandData {
+    _jsonrpcCmdRunCommandData   :: JsonRpcRequest
+  , _nameCmdRunCommandData      :: String
+  , _argumentsCmdRunCommandData :: RawJsonByteString
+  }
 
+makeLenses ''CmdRunCommandData
+-}
 -- |
 --
 type EchoCommandCallback a = String -> IO a
@@ -487,9 +607,67 @@ makeLenses ''EchoCommandData
 data Command =
     EchoCommand       EchoCommandData
   | PtyConnectCommand PtyConnectCommandData
+  | PtyTerminateCommand PtyTerminateCommandData
   | PtyMessageCommand PtyMessageCommandData
   | SystemCommand     SystemCommandData
+--  | CmdRunCommand     CmdRunCommandData
 
+
+--------------------------------------------------------------------------------
+-- |
+--
+data DefaultCmdRunCommandData =
+  DefaultCmdRunCommandData {
+    _jsonrpcDefaultCmdRunCommandData   :: JsonRpcRequest
+  , _nameDefaultCmdRunCommandData      :: String
+  , _argumentsDefaultCmdRunCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''DefaultCmdRunCommandData
+
+-- |
+--
+data EchoCmdRunCommandData =
+  EchoCmdRunCommandData {
+    _jsonrpcEchoCmdRunCommandData :: JsonRpcRequest
+  , _valueEchoCmdRunCommandData   :: String
+  } deriving (Show, Read, Eq)
+
+makeLenses ''EchoCmdRunCommandData
+
+-- |
+--
+data CmdRunCommand =
+    EchoCmdRunCommand EchoCmdRunCommandData
+  | DefaultCmdRunCommand DefaultCmdRunCommandData
+  deriving (Show, Read, Eq)
+
+--------------------------------------------------------------------------------
+-- |
+--
+data ToolsListWatchCommandData =
+  ToolsListWatchCommandData {
+  --  _jsonrpcToolsListWatchCommandData   :: JsonRpcRequest
+  } deriving (Show, Read, Eq)
+
+makeLenses ''ToolsListWatchCommandData
+
+-- |
+--
+data EchoWatchCommandData =
+  EchoWatchCommandData {
+    _jsonrpcEchoWatchCommandData :: JsonRpcRequest
+  , _valueEchoWatchCommandData   :: String
+  } deriving (Show, Read, Eq)
+
+makeLenses ''EchoWatchCommandData
+
+-- |
+--
+data WatchCommand =
+    EchoWatchCommand EchoWatchCommandData
+  | ToolsListWatchCommand ToolsListWatchCommandData
+  deriving (Show, Read, Eq)
 
 --------------------------------------------------------------------------------
 -- |
@@ -500,7 +678,10 @@ data DomainData = DomainData {
   , _scriptsDirDomainData    :: String
   , _requestQueueDomainData  :: TQueue McpRequest
   , _responseQueueDomainData :: TQueue McpResponse
+  , _notificationQueueDomainData :: TQueue McpNotification
   , _commandQueueDomainData  :: TQueue Command
+  , _cmdRunQueueDomainData   :: TQueue CmdRunCommand
+  , _watchQueueDomainData    :: TQueue WatchCommand
   , _promptsDomainData       :: [String]
   }
 
@@ -509,19 +690,30 @@ makeLenses ''DomainData
 defaultDomainData :: IO DomainData
 defaultDomainData = do
   hSetEncoding stdin  utf8
+  hSetBuffering stdin LineBuffering
+
   hSetEncoding stdout utf8
+  hSetBuffering stdout LineBuffering
+
   hSetEncoding stderr utf8
+  hSetBuffering stderr LineBuffering
 
   reqQ <- newTQueueIO
   resQ <- newTQueueIO
+  notQ <- newTQueueIO
   cmdQ <- newTQueueIO
+  cmdRunQ <- newTQueueIO
+  watchQ  <- newTQueueIO
   return DomainData {
            _logDirDomainData        = Nothing
          , _logLevelDomainData      = LevelDebug
          , _scriptsDirDomainData    = "./scripts"
          , _requestQueueDomainData  = reqQ
          , _responseQueueDomainData = resQ
+         , _notificationQueueDomainData = notQ
          , _commandQueueDomainData  = cmdQ
+         , _cmdRunQueueDomainData   = cmdRunQ
+         , _watchQueueDomainData    = watchQ
          , _promptsDomainData       = def
          }
 

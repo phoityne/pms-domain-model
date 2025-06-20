@@ -15,3 +15,8 @@ _LOGTAG = T.pack ""
 _TIME_FORMAT :: B.ByteString
 _TIME_FORMAT = T.encodeUtf8 $ T.pack "%Y/%m/%d %T %z"
 
+-- |
+--
+_TOOLS_LIST_FILE :: String
+_TOOLS_LIST_FILE = "tools-list.json"
+

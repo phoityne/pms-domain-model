@@ -55,7 +55,7 @@ extra-doc-files:    README.md,
 -- extra-source-files:
 
 library
-    ghc-options: -Wall -Wno-orphans -Wno-x-partial
+    ghc-options: -Wall -threaded -Wno-orphans -Wno-x-partial
 
     -- Modules exported by the library.
     exposed-modules:  PMS.Domain.Model.DM.TH,
@@ -91,7 +91,7 @@ library
     default-language: GHC2021
 
 test-suite pms-domain-model-test
-    ghc-options: -Wno-incomplete-uni-patterns
+    ghc-options: -threaded -Wno-incomplete-uni-patterns
     -- Import common warning flags.
     -- import:           warnings
 
