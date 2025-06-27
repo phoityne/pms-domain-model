@@ -20,3 +20,14 @@ _TIME_FORMAT = T.encodeUtf8 $ T.pack "%Y/%m/%d %T %z"
 _TOOLS_LIST_FILE :: String
 _TOOLS_LIST_FILE = "tools-list.json"
 
+-- |
+--
+_PROMPTS_LIST_FILE :: String
+_PROMPTS_LIST_FILE = "prompts-list.json"
+
+
+-- |
+--
+_LF :: String
+_LF = "\n"
+
