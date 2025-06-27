@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE CPP #-}
 
 module PMS.Domain.Model.DS.Utility where
 
@@ -75,19 +76,31 @@ lbs2str = TL.unpack. TLE.decodeUtf8
 
 
 -- |
+--  [ ";", "&&", "|", "$", "`", "<", ">", "\\", "\"", "..", "/"]
 --
 invalidChars :: [T.Text]
 invalidChars =
-  [ "&&", "|", "..", "/"]
---  [ ";", "&&", "|", "$", "`", "<", ">", "\\", "\"", "..", "/"]
+#ifdef mingw32_HOST_OS
+  [ "&&", "||", "|", ".."]
+#else
+  [ "&&", "||", "|", "..", "/"]
+#endif
 
 -- |
 --
 invalidCmds :: [String]
-invalidCmds = [
-    "rm", "mv", "dd", "chmod", "chown"
-  , "shutdown", "reboot", "kill", "nc", "telnet", "ssh"
+invalidCmds = 
+#ifdef mingw32_HOST_OS
+  [
+    "del", "erase", "rd", "rmdir", "format"
+  , "shutdown", "restart", "taskkill"
   ]
+#else
+  [
+    "rm", "mv", "dd", "chmod", "chown"
+  , "shutdown", "reboot", "kill", "nc"
+  ]
+#endif
 
 -- |
 --
@@ -150,7 +163,9 @@ expect lock feed prompts = STM.atomically (STM.tryTakeTMVar lock) >>= \case
   Just () -> flip E.catchAny exception $ flip E.finally finalize $ do
     hPutStrLn stderr $ "[INFO] expect: " ++ show prompts
     output <- readUntilPrompt feed prompts
-    let result = T.unpack (TE.decodeUtf8 output)
+    
+    -- let result = T.unpack (TE.decodeUtf8 output)
+    let result = T.unpack $ ANSI.stripAnsiEscapeCodes $ TE.decodeUtf8With TEE.lenientDecode output
     return (Just result)
 
   where
