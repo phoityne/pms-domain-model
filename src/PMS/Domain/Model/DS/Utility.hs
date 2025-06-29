@@ -195,7 +195,8 @@ readUntilPrompt feed prompts = go BS.empty
       when ("\ESC[6n" `BS.isInfixOf` chunk) $ do
         E.throwString "Unsupported: Detected cursor position report request (ESC[6n)."
 
-      let txt = ANSI.stripAnsiEscapeCodes $ TE.decodeUtf8With TEE.lenientDecode chunk
+      -- let txt = ANSI.stripAnsiEscapeCodes $ TE.decodeUtf8With TEE.lenientDecode chunk
+      let txt = TE.decodeUtf8With TEE.lenientDecode chunk
       hPutStrLn stderr $ "[INFO] chunk:\n" ++ T.unpack txt
 
       let acc' = BS.append acc chunk
