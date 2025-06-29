@@ -17,6 +17,11 @@ _TIME_FORMAT = T.encodeUtf8 $ T.pack "%Y/%m/%d %T %z"
 
 -- |
 --
+_TIMEOUT_MICROSEC :: Int
+_TIMEOUT_MICROSEC = 30 * 1000 * 1000
+
+-- |
+--
 _TOOLS_LIST_FILE :: String
 _TOOLS_LIST_FILE = "tools-list.json"
 
