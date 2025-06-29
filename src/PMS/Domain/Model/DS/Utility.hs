@@ -21,6 +21,7 @@ import qualified Data.String.AnsiEscapeCodes.Strip.Text as ANSI
 import qualified Data.Text.Encoding.Error as TEE
 import qualified Control.Concurrent.STM as STM
 import System.IO
+import Data.List
 
 import PMS.Domain.Model.DM.Type
 import PMS.Domain.Model.DM.Constant
@@ -186,6 +187,32 @@ expect lock feed prompts = STM.atomically (STM.tryTakeTMVar lock) >>= \case
 readUntilPrompt :: IO BS.ByteString -> [String] -> IO BS.ByteString
 readUntilPrompt feed prompts = go BS.empty
   where
+    (negativePrompts, positivePrompts) = partition (\s -> not (null s) && head s == '!') prompts
+    promptBsList    = map BS.pack $ filter (not . null) $ map (dropWhile (== '!')) positivePrompts
+    rejectPromptBs  = map BS.pack $ map (drop 1) negativePrompts
+
+    foundPrompt acc =
+      any (`BS.isInfixOf` acc) promptBsList &&
+      all (not . (`BS.isInfixOf` acc)) rejectPromptBs
+
+    go acc = do
+      chunk <- feed
+      when ("\ESC[6n" `BS.isInfixOf` chunk) $
+        E.throwString "Unsupported: Detected cursor position report request (ESC[6n)."
+
+      let txt = TE.decodeUtf8With TEE.lenientDecode chunk
+      hPutStrLn stderr $ "[INFO] chunk:\n" ++ T.unpack txt
+
+      let acc' = BS.append acc chunk
+      if foundPrompt acc'
+        then return acc'
+        else go acc'
+
+
+{-
+readUntilPrompt :: IO BS.ByteString -> [String] -> IO BS.ByteString
+readUntilPrompt feed prompts = go BS.empty
+  where
     promptBsList = map BS.pack prompts
 
     foundPrompt acc = any (`BS.isInfixOf` acc) promptBsList
@@ -205,7 +232,7 @@ readUntilPrompt feed prompts = go BS.empty
         else go acc'
 
 
-{-
+
 readUntilPrompt :: Pty -> [String] -> IO BS.ByteString
 readUntilPrompt pms prompts = go BS.empty T.empty
   where
