@@ -451,8 +451,8 @@ makeLenses ''McpInitializeResponseResultServerInfo
 
 instance Default McpInitializeResponseResultServerInfo where
   def = McpInitializeResponseResultServerInfo {
-        _nameMcpInitializeResponseResultServerInfo = def
-      , _versionMcpInitializeResponseResultServerInfo = def
+        _nameMcpInitializeResponseResultServerInfo = "pty-mcp-server"
+      , _versionMcpInitializeResponseResultServerInfo = "0.0.4"
       }
 
 -- |
