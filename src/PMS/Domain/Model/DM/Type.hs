@@ -470,7 +470,7 @@ makeLenses ''McpInitializeResponseResult
 
 instance Default McpInitializeResponseResult where
   def = McpInitializeResponseResult {
-        _protocolVersionMcpInitializeResponseResult = def
+        _protocolVersionMcpInitializeResponseResult = "2025-06-18"
       , _capabilitiesMcpInitializeResponseResult = def
       , _serverInfoMcpInitializeResponseResult = def
       , _instructionsMcpInitializeResponseResult = def
