@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.0.5.0 -- 2025-07-06
+
+* Added socket tool.
+
 ## 0.0.4.0 -- 2025-06-29
 
 * Added prompts interface.

@@ -30,9 +30,23 @@ _TOOLS_LIST_FILE = "tools-list.json"
 _PROMPTS_LIST_FILE :: String
 _PROMPTS_LIST_FILE = "prompts-list.json"
 
+-- |
+--
+_RESOURCES_LIST_FILE :: String
+_RESOURCES_LIST_FILE = "resources-list.json"
+
+-- |
+--
+_RESOURCES_TPL_LIST_FILE :: String
+_RESOURCES_TPL_LIST_FILE = "resources-templates-list.json"
 
 -- |
 --
 _LF :: String
 _LF = "\n"
+
+-- |
+--
+_CRLF :: String
+_CRLF = "\r\n"
 
