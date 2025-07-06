@@ -1343,15 +1343,80 @@ data SocketCommand =
   | SocketTelnetCommand  SocketTelnetCommandData
   deriving (Show, Read, Eq)
 
+
+--------------------------------------------------------------------------------
 -- |
 --
-{-
-getJsonRpcSocketCommand :: SocketCommand -> JsonRpcRequest
-getJsonRpcSocketCommand (SocketEchoCommand      d) = d^.jsonrpcSocketEchoCommandData
-getJsonRpcSocketCommand (SocketOpenCommand       d) = d^.jsonrpcSocketOpenCommandData
-getJsonRpcSocketCommand (SocketCloseCommand d) = d^.jsonrpcSocketCloseCommandData
-getJsonRpcSocketCommand (SocketMessageCommand   d) = d^.jsonrpcSocketMessageCommandData
--}
+data SerialEchoCommandData =
+  SerialEchoCommandData {
+    _jsonrpcSerialEchoCommandData :: JsonRpcRequest
+  , _valueSerialEchoCommandData   :: String
+  } deriving (Show, Read, Eq)
+
+makeLenses ''SerialEchoCommandData
+
+-- |
+--
+data SerialOpenCommandData =
+  SerialOpenCommandData {
+    _jsonrpcSerialOpenCommandData   :: JsonRpcRequest
+  , _nameSerialOpenCommandData      :: String
+  , _argumentsSerialOpenCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''SerialOpenCommandData
+
+-- |
+--
+data SerialCloseCommandData =
+  SerialCloseCommandData {
+    _jsonrpcSerialCloseCommandData :: JsonRpcRequest
+  } deriving (Show, Read, Eq)
+  
+makeLenses ''SerialCloseCommandData
+
+
+-- |
+--
+data SerialReadCommandData =
+  SerialReadCommandData {
+    _jsonrpcSerialReadCommandData :: JsonRpcRequest
+  , _argumentsSerialReadCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+  
+makeLenses ''SerialReadCommandData
+
+-- |
+--
+data SerialWriteCommandData =
+  SerialWriteCommandData {
+    _jsonrpcSerialWriteCommandData :: JsonRpcRequest
+  , _argumentsSerialWriteCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''SerialWriteCommandData
+
+
+-- |
+--
+data SerialMessageCommandData =
+  SerialMessageCommandData {
+    _jsonrpcSerialMessageCommandData   :: JsonRpcRequest
+  , _argumentsSerialMessageCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''SerialMessageCommandData
+
+-- |
+--
+data SerialCommand =
+    SerialEchoCommand    SerialEchoCommandData
+  | SerialOpenCommand    SerialOpenCommandData
+  | SerialCloseCommand   SerialCloseCommandData
+  | SerialReadCommand    SerialReadCommandData
+  | SerialWriteCommand   SerialWriteCommandData
+  | SerialMessageCommand SerialMessageCommandData
+  deriving (Show, Read, Eq)
 
 --------------------------------------------------------------------------------
 -- |
@@ -1370,6 +1435,7 @@ data DomainData = DomainData {
   , _watchQueueDomainData        :: TQueue WatchCommand
   , _procspawnQueueDomainData    :: TQueue ProcSpawnCommand
   , _socketQueueDomainData       :: TQueue SocketCommand
+  , _serialQueueDomainData       :: TQueue SerialCommand
   , _promptsDomainData           :: [String]
   }
 
@@ -1394,6 +1460,7 @@ defaultDomainData = do
   watchQ  <- newTQueueIO
   procQ   <- newTQueueIO
   socketQ   <- newTQueueIO
+  serialQ   <- newTQueueIO
   return DomainData {
            _logDirDomainData            = Nothing
          , _logLevelDomainData          = LevelDebug
@@ -1408,6 +1475,7 @@ defaultDomainData = do
          , _watchQueueDomainData        = watchQ
          , _procspawnQueueDomainData    = procQ
          , _socketQueueDomainData       = socketQ
+         , _serialQueueDomainData       = serialQ
          , _promptsDomainData           = def
          }
 

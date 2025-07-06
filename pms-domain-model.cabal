@@ -55,7 +55,8 @@ extra-doc-files:    README.md,
 -- extra-source-files:
 
 library
-    ghc-options: -Wall -threaded -Wno-orphans -Wno-x-partial
+    ghc-options: -Wall -threaded -Wno-orphans
+--     ghc-options: -Wall -threaded -Wno-orphans -Wno-x-partial
 
     -- Modules exported by the library.
     exposed-modules:  PMS.Domain.Model.DM.TH,
@@ -70,7 +71,7 @@ library
     -- other-extensions:
 
     -- Other library packages from which modules are imported.
-    build-depends:    base ^>=4.21.0.0,
+    build-depends:    base,
                       text,
                       mtl,
                       aeson,
@@ -115,7 +116,7 @@ test-suite pms-domain-model-test
     main-is:          Spec.hs
 
     -- Test dependencies.
-    build-depends:    base ^>=4.21.0.0,
+    build-depends:    base,
                       hspec,
                       hspec-discover,
                       data-default,
