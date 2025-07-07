@@ -103,14 +103,21 @@ invalidCmds =
   ]
 #endif
 
+
+-- |
+--
+validateMessage :: String -> IO String
+validateMessage cmd = do
+  let (c : args) = words cmd ++ [""]
+  _ <- validateCommand c
+  _ <- validateArgs args
+  return cmd
+
 -- |
 --
 validateCommand :: String -> IO String
 validateCommand cmd = do
   let tcmd = T.pack cmd
-
-  when (null cmd) $
-    E.throwString "Command is empty."
 
   mapM_ (\seqStr ->
           when (seqStr `T.isInfixOf` tcmd) $
@@ -128,6 +135,12 @@ validateCommand cmd = do
     isAllowedChar :: Char -> Bool
     isAllowedChar c = isAlphaNum c || c `elem` ("-._" :: String)
 
+
+-- |
+--
+validateArgs :: [String] -> IO [String]
+validateArgs = mapM validateArg
+
 -- |
 --
 validateArg :: String -> IO String
@@ -137,21 +150,6 @@ validateArg arg = do
     E.throwString $ "Argument contains forbidden sequences: " ++ arg
   return arg
 
--- |
---
-validateArgs :: [String] -> IO [String]
-validateArgs = mapM validateArg
-
--- |
---
-validateMessage :: String -> IO String
-validateMessage cmd =
-  case words cmd of
-    [] -> E.throwString "Command is empty."
-    (c : args) -> do
-      _ <- validateCommand c
-      _ <- validateArgs args
-      return cmd
 
 
 -- |
