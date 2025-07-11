@@ -107,11 +107,12 @@ invalidCmds =
 -- |
 --
 validateMessage :: String -> IO String
-validateMessage cmd = do
-  let (c : args) = words cmd ++ [""]
-  _ <- validateCommand c
-  _ <- validateArgs args
-  return cmd
+validateMessage cmd = case words cmd of
+  [] -> return cmd
+  (c : args) -> do
+    _ <- validateCommand c
+    _ <- validateArgs args
+    return cmd
 
 -- |
 --
