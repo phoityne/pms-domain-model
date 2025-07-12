@@ -630,7 +630,7 @@ makeLenses ''McpToolsCallResponseResult
 instance Default McpToolsCallResponseResult where
   def = McpToolsCallResponseResult {
         _contentMcpToolsCallResponseResult = def
-      , _isErrorMcpToolsCallResponseResult = def
+      , _isErrorMcpToolsCallResponseResult = False
       }
 
 
