@@ -1148,6 +1148,12 @@ data CmdRunCommand =
   | DefaultCmdRunCommand DefaultCmdRunCommandData
   deriving (Show, Read, Eq)
 
+-- |
+--
+getJsonRpcCmdRunCommand :: CmdRunCommand -> JsonRpcRequest
+getJsonRpcCmdRunCommand (EchoCmdRunCommand    d) = d^.jsonrpcEchoCmdRunCommandData
+getJsonRpcCmdRunCommand (DefaultCmdRunCommand d) = d^.jsonrpcDefaultCmdRunCommandData
+
 --------------------------------------------------------------------------------
 -- |
 --
@@ -1343,6 +1349,16 @@ data SocketCommand =
   | SocketTelnetCommand  SocketTelnetCommandData
   deriving (Show, Read, Eq)
 
+-- |
+--
+getJsonRpcSocketCommand :: SocketCommand -> JsonRpcRequest
+getJsonRpcSocketCommand (SocketEchoCommand    d) = d^.jsonrpcSocketEchoCommandData
+getJsonRpcSocketCommand (SocketOpenCommand    d) = d^.jsonrpcSocketOpenCommandData
+getJsonRpcSocketCommand (SocketCloseCommand   d) = d^.jsonrpcSocketCloseCommandData
+getJsonRpcSocketCommand (SocketReadCommand    d) = d^.jsonrpcSocketReadCommandData
+getJsonRpcSocketCommand (SocketWriteCommand   d) = d^.jsonrpcSocketWriteCommandData
+getJsonRpcSocketCommand (SocketMessageCommand d) = d^.jsonrpcSocketMessageCommandData
+getJsonRpcSocketCommand (SocketTelnetCommand  d) = d^.jsonrpcSocketTelnetCommandData
 
 --------------------------------------------------------------------------------
 -- |
@@ -1417,6 +1433,17 @@ data SerialCommand =
   | SerialWriteCommand   SerialWriteCommandData
   | SerialMessageCommand SerialMessageCommandData
   deriving (Show, Read, Eq)
+
+
+-- |
+--
+getJsonRpcSerialCommand :: SerialCommand -> JsonRpcRequest
+getJsonRpcSerialCommand (SerialEchoCommand    d) = d^.jsonrpcSerialEchoCommandData
+getJsonRpcSerialCommand (SerialOpenCommand    d) = d^.jsonrpcSerialOpenCommandData
+getJsonRpcSerialCommand (SerialCloseCommand   d) = d^.jsonrpcSerialCloseCommandData
+getJsonRpcSerialCommand (SerialReadCommand    d) = d^.jsonrpcSerialReadCommandData
+getJsonRpcSerialCommand (SerialWriteCommand   d) = d^.jsonrpcSerialWriteCommandData
+getJsonRpcSerialCommand (SerialMessageCommand d) = d^.jsonrpcSerialMessageCommandData
 
 --------------------------------------------------------------------------------
 -- |
