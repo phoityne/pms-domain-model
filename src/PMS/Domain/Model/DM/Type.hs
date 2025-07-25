@@ -1491,9 +1491,9 @@ defaultDomainData = do
   return DomainData {
            _logDirDomainData            = Nothing
          , _logLevelDomainData          = LevelDebug
-         , _toolsDirDomainData          = "./tools"
-         , _promptsDirDomainData        = "./prompts"
-         , _resourcesDirDomainData      = "./resources"
+         , _toolsDirDomainData          = "pty-mcp-server/tools"
+         , _promptsDirDomainData        = "pty-mcp-server/prompts"
+         , _resourcesDirDomainData      = "pty-mcp-server/resources"
          , _requestQueueDomainData      = reqQ
          , _responseQueueDomainData     = resQ
          , _notificationQueueDomainData = notQ

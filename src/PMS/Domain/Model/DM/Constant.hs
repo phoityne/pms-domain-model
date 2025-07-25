@@ -50,7 +50,6 @@ _LF = "\n"
 _CRLF :: String
 _CRLF = "\r\n"
 
-
 -- |
 --
 _CR :: String
