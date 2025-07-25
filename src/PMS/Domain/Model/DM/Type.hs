@@ -743,7 +743,7 @@ instance Default McpPromptsGetResponseData where
 --
 data McpResourcesTemplatesListResponseResult =
   McpResourcesTemplatesListResponseResult {
-    _resourcesMcpResourcesTemplatesListResponseResult :: RawJsonByteString
+    _resourceTemplatesMcpResourcesTemplatesListResponseResult :: RawJsonByteString
   } deriving (Show, Read, Eq)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpResourcesTemplatesListResponseResult", omitNothingFields = True} ''McpResourcesTemplatesListResponseResult)
@@ -751,7 +751,7 @@ makeLenses ''McpResourcesTemplatesListResponseResult
 
 instance Default McpResourcesTemplatesListResponseResult where
   def = McpResourcesTemplatesListResponseResult {
-        _resourcesMcpResourcesTemplatesListResponseResult = def
+        _resourceTemplatesMcpResourcesTemplatesListResponseResult = def
       }
 
 -- |
