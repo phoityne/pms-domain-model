@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.0.9.0 -- 2025-08-17
+
+* Fixed proc-message.
+
 ## 0.0.8.0 -- 2025-07-27
 
 * Fixed resources templates.
