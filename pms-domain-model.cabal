@@ -83,6 +83,7 @@ library
                       bytestring,
                       filepath,
                       stm,
+                      async,
                       strip-ansi-escape,
                       safe-exceptions
                     

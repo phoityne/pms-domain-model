@@ -80,29 +80,17 @@ lbs2str = TL.unpack. TLE.decodeUtf8
 --  [ ";", "&&", "|", "$", "`", "<", ">", "\\", "\"", "..", "/"]
 --
 invalidChars :: [T.Text]
-invalidChars =
-#ifdef mingw32_HOST_OS
-  [ "&&", "||", "|", ".."]
-#else
-  [ "&&", "||", "|", ".."]
-#endif
+invalidChars = [ "&&", "||", "|", "..", "reboot", "shutdown", "restart", "kill"]
 
 -- |
 --
 invalidCmds :: [String]
-invalidCmds = 
-#ifdef mingw32_HOST_OS
-  [
+invalidCmds = [
     "del", "erase", "rd", "rmdir", "format"
   , "shutdown", "restart", "taskkill"
+  , "rm", "mv", "dd", "chmod", "chown"
+  , "reboot", "kill", "nc", "sudo", "su"
   ]
-#else
-  [
-    "rm", "mv", "dd", "chmod", "chown"
-  , "shutdown", "reboot", "kill", "nc"
-  ]
-#endif
-
 
 -- |
 --
@@ -164,7 +152,6 @@ expect lock feed prompts = STM.atomically (STM.tryTakeTMVar lock) >>= \case
     hPutStrLn stderr $ "[INFO] expect: " ++ show prompts
     output <- readUntilPrompt feed prompts
     
-    -- let result = T.unpack (TE.decodeUtf8 output)
     let result = T.unpack $ ANSI.stripAnsiEscapeCodes $ TE.decodeUtf8With TEE.lenientDecode output
     return (Just result)
 
@@ -193,16 +180,42 @@ readUntilPrompt feed prompts = go BS.empty
     foundPrompt acc =
       any (`BS.isInfixOf` acc) promptBsList &&
       all (not . (`BS.isInfixOf` acc)) rejectPromptBs
-
+{-
     go acc = do
-      chunk <- feed
-      when ("\ESC[6n" `BS.isInfixOf` chunk) $
-        E.throwString "Unsupported: Detected cursor position report request (ESC[6n)."
+      let tout = 10*1000*1000
+      timeout tout feed >>= \case
+        Just chunk -> do
+          when ("\ESC[6n" `BS.isInfixOf` chunk) $
+            E.throwString "Unsupported: Detected cursor position report request (ESC[6n)."
 
+          let txt = TE.decodeUtf8With TEE.lenientDecode chunk
+          hPutStrLn stderr $ "[INFO] chunk:\n" ++ T.unpack txt
+
+          let acc' = BS.append acc chunk
+          if foundPrompt acc'
+            then return acc'
+            else go acc'
+        Nothing -> return $ BS.concat [BS.pack "timeout occurred. acc:", acc]
+-}
+
+
+    go :: BS.ByteString -> IO BS.ByteString
+    go acc = do
+
+      chunk <- E.catchAny feed (hdlExcept acc)
       let txt = TE.decodeUtf8With TEE.lenientDecode chunk
       hPutStrLn stderr $ "[INFO] chunk:\n" ++ T.unpack txt
 
       let acc' = BS.append acc chunk
+      when ("\ESC[6n" `BS.isInfixOf` chunk) $ do
+        let accText = TE.decodeUtf8With TEE.lenientDecode acc'
+        E.throwString $ "Unsupported: Detected cursor position report request (ESC[6n)." ++ T.unpack accText
+
       if foundPrompt acc'
         then return acc'
         else go acc'
+
+    hdlExcept :: BS.ByteString -> E.SomeException -> IO BS.ByteString
+    hdlExcept acc e = do
+      let accText = TE.decodeUtf8With TEE.lenientDecode acc
+      E.throwString $ show e ++ "\nAccumulated input so far:\n" ++ T.unpack accText
