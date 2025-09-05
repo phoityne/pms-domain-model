@@ -1464,6 +1464,8 @@ data DomainData = DomainData {
   , _socketQueueDomainData       :: TQueue SocketCommand
   , _serialQueueDomainData       :: TQueue SerialCommand
   , _promptsDomainData           :: [String]
+  , _invalidCharsDomainData      :: [String]
+  , _invalidCmdsDomainData       :: [String]
   }
 
 makeLenses ''DomainData
@@ -1504,6 +1506,8 @@ defaultDomainData = do
          , _socketQueueDomainData       = socketQ
          , _serialQueueDomainData       = serialQ
          , _promptsDomainData           = def
+         , _invalidCharsDomainData      = def
+         , _invalidCmdsDomainData       = def
          }
 
 -- |

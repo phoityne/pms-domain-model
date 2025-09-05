@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.1.0.0 -- 2025-09-07
+
+* Support invalidChars configs.
+
 ## 0.0.9.0 -- 2025-08-17
 
 * Fixed proc-message.

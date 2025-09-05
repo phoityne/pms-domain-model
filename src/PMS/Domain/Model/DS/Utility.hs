@@ -79,38 +79,38 @@ lbs2str = TL.unpack. TLE.decodeUtf8
 -- |
 --  [ ";", "&&", "|", "$", "`", "<", ">", "\\", "\"", "..", "/"]
 --
-invalidChars :: [T.Text]
-invalidChars = [ "&&", "||", "|", "..", "reboot", "shutdown", "restart", "kill"]
+-- invalidChars :: [String]
+-- invalidChars = [ "&&", "||", "..", "reboot", "shutdown", "restart", "kill"]
 
 -- |
 --
-invalidCmds :: [String]
-invalidCmds = [
-    "del", "erase", "rd", "rmdir", "format"
-  , "shutdown", "restart", "taskkill"
-  , "rm", "mv", "dd", "chmod", "chown"
-  , "reboot", "kill", "nc", "sudo", "su"
-  ]
+-- invalidCmds :: [String]
+-- invalidCmds = [
+--     "del", "erase", "rd", "rmdir", "format"
+--   , "shutdown", "restart", "taskkill"
+--   , "rm", "mv", "dd", "chmod", "chown"
+--   , "reboot", "kill", "nc", "sudo", "su"
+--   ]
 
 -- |
 --
-validateMessage :: String -> IO String
-validateMessage cmd = case words cmd of
+validateMessage :: [String] ->  [String] -> String -> IO String
+validateMessage invalidChars invalidCmds cmd = case words cmd of
   [] -> return cmd
   (c : args) -> do
-    _ <- validateCommand c
-    _ <- validateArgs args
+    _ <- validateCommand invalidChars invalidCmds c
+    _ <- validateArgs invalidChars args
     return cmd
 
 -- |
 --
-validateCommand :: String -> IO String
-validateCommand cmd = do
+validateCommand :: [String] -> [String] -> String -> IO String
+validateCommand invalidChars invalidCmds cmd = do
   let tcmd = T.pack cmd
 
   mapM_ (\seqStr ->
-          when (seqStr `T.isInfixOf` tcmd) $
-            E.throwString $ "Command contains forbidden sequence: " ++ T.unpack seqStr
+          when (T.pack seqStr `T.isInfixOf` tcmd) $
+            E.throwString $ "Command contains forbidden sequence: " ++ seqStr
         ) invalidChars
 
   when (cmd `elem` invalidCmds) $
@@ -127,15 +127,15 @@ validateCommand cmd = do
 
 -- |
 --
-validateArgs :: [String] -> IO [String]
-validateArgs = mapM validateArg
+validateArgs :: [String] -> [String] -> IO [String]
+validateArgs invalidChars = mapM (validateArg invalidChars)
 
 -- |
 --
-validateArg :: String -> IO String
-validateArg arg = do
+validateArg :: [String] -> String -> IO String
+validateArg invalidChars arg = do
   let tArg = T.pack arg
-  when (any (`T.isInfixOf` tArg) invalidChars) $
+  when (any (\s -> T.pack s `T.isInfixOf` tArg) invalidChars) $
     E.throwString $ "Argument contains forbidden sequences: " ++ arg
   return arg
 
