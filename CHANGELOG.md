@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.1.1.0 -- 2025-09-15
+
+* Fixed validateMessage.
+
 ## 0.1.0.0 -- 2025-09-07
 
 * Support invalidChars configs.

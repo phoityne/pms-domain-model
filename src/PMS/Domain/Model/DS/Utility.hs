@@ -95,12 +95,20 @@ lbs2str = TL.unpack. TLE.decodeUtf8
 -- |
 --
 validateMessage :: [String] ->  [String] -> String -> IO String
-validateMessage invalidChars invalidCmds cmd = case words cmd of
-  [] -> return cmd
-  (c : args) -> do
-    _ <- validateCommand invalidChars invalidCmds c
-    _ <- validateArgs invalidChars args
-    return cmd
+validateMessage invalidChars invalidCmds cmd = do
+  let tcmd = T.pack cmd
+
+  mapM_ (\seqStr ->
+          when (T.pack seqStr `T.isInfixOf` tcmd) $
+            E.throwString $ "Command contains forbidden sequence: " ++ seqStr
+        ) invalidChars
+
+  mapM_ (\seqStr ->
+          when (T.pack seqStr `T.isInfixOf` tcmd) $
+            E.throwString $ "Command contains forbidden sequence: " ++ seqStr
+        ) invalidCmds
+
+  return cmd
 
 -- |
 --
