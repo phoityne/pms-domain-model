@@ -604,6 +604,12 @@ data McpToolsCallResponseResultContent =
   McpToolsCallResponseResultContent {
     _typeMcpToolsCallResponseResultContent :: String
   , _textMcpToolsCallResponseResultContent :: String
+  }
+  | 
+  McpToolsCallResponseResultImageContent {
+    _typeMcpToolsCallResponseResultContent :: String
+  , _dataMcpToolsCallResponseResultContent :: String
+  , _mimeTypeToolsCallResponseResultContent :: String
   } deriving (Show, Read, Eq)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpToolsCallResponseResultContent", omitNothingFields = True} ''McpToolsCallResponseResultContent)

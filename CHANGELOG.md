@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.1.2.0 -- 2025-09-23
+
+* Support base64 image tool response.
+
 ## 0.1.1.0 -- 2025-09-15
 
 * Fixed validateMessage.
