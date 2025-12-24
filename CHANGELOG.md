@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.1.3.0 -- 2025-12-31
+
+* Add file system tools.
+
 ## 0.1.2.0 -- 2025-09-23
 
 * Support base64 image tool response.

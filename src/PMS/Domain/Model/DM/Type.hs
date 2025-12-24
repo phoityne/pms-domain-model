@@ -194,7 +194,7 @@ instance Default McpToolsListRequestData where
 data McpToolsCallRequestDataParams =
   McpToolsCallRequestDataParams {
     _nameMcpToolsCallRequestDataParams :: String
-  , _argumentsMcpToolsCallRequestDataParams  :: RawJsonByteString
+  , _argumentsMcpToolsCallRequestDataParams :: RawJsonByteString
   } deriving (Show, Read, Eq)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpToolsCallRequestDataParams", omitNothingFields = True} ''McpToolsCallRequestDataParams)
@@ -1160,6 +1160,65 @@ getJsonRpcCmdRunCommand :: CmdRunCommand -> JsonRpcRequest
 getJsonRpcCmdRunCommand (EchoCmdRunCommand    d) = d^.jsonrpcEchoCmdRunCommandData
 getJsonRpcCmdRunCommand (DefaultCmdRunCommand d) = d^.jsonrpcDefaultCmdRunCommandData
 
+
+--------------------------------------------------------------------------------
+-- |
+--
+data EchoFileSystemCommandData =
+  EchoFileSystemCommandData {
+    _jsonrpcEchoFileSystemCommandData :: JsonRpcRequest
+  , _valueEchoFileSystemCommandData   :: String
+  } deriving (Show, Read, Eq)
+
+makeLenses ''EchoFileSystemCommandData
+
+-- |
+--
+data WriteFileFileSystemCommandData =
+  WriteFileFileSystemCommandData {
+    _jsonrpcWriteFileFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsWriteFileFileSystemCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''WriteFileFileSystemCommandData
+
+-- |
+--
+data ReadFileFileSystemCommandData =
+  ReadFileFileSystemCommandData {
+    _jsonrpcReadFileFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsReadFileFileSystemCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''ReadFileFileSystemCommandData
+
+-- |
+--
+data DirListFileSystemCommandData =
+  DirListFileSystemCommandData {
+    _jsonrpcDirListFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsDirListFileSystemCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''DirListFileSystemCommandData
+
+-- |
+--
+data FileSystemCommand =
+    EchoFileSystemCommand EchoFileSystemCommandData
+  | DirListFileSystemCommand DirListFileSystemCommandData
+  | ReadFileFileSystemCommand ReadFileFileSystemCommandData
+  | WriteFileFileSystemCommand WriteFileFileSystemCommandData
+  deriving (Show, Read, Eq)
+
+-- |
+--
+getJsonRpcFileSystemCommand :: FileSystemCommand -> JsonRpcRequest
+getJsonRpcFileSystemCommand (EchoFileSystemCommand d)      = d^.jsonrpcEchoFileSystemCommandData
+getJsonRpcFileSystemCommand (DirListFileSystemCommand d)   = d^.jsonrpcDirListFileSystemCommandData
+getJsonRpcFileSystemCommand (ReadFileFileSystemCommand d)  = d^.jsonrpcReadFileFileSystemCommandData
+getJsonRpcFileSystemCommand (WriteFileFileSystemCommand d) = d^.jsonrpcWriteFileFileSystemCommandData
+
 --------------------------------------------------------------------------------
 -- |
 --
@@ -1460,11 +1519,13 @@ data DomainData = DomainData {
   , _toolsDirDomainData          :: String
   , _promptsDirDomainData        :: String
   , _resourcesDirDomainData      :: String
+  , _writableDirDomainData       :: Maybe String
   , _requestQueueDomainData      :: TQueue McpRequest
   , _responseQueueDomainData     :: TQueue McpResponse
   , _notificationQueueDomainData :: TQueue McpNotification
   , _commandQueueDomainData      :: TQueue Command
   , _cmdRunQueueDomainData       :: TQueue CmdRunCommand
+  , _fileSystemQueueDomainData   :: TQueue FileSystemCommand
   , _watchQueueDomainData        :: TQueue WatchCommand
   , _procspawnQueueDomainData    :: TQueue ProcSpawnCommand
   , _socketQueueDomainData       :: TQueue SocketCommand
@@ -1492,6 +1553,7 @@ defaultDomainData = do
   notQ <- newTQueueIO
   cmdQ <- newTQueueIO
   cmdRunQ <- newTQueueIO
+  fileSystemQ <- newTQueueIO
   watchQ  <- newTQueueIO
   procQ   <- newTQueueIO
   socketQ   <- newTQueueIO
@@ -1502,11 +1564,13 @@ defaultDomainData = do
          , _toolsDirDomainData          = "pty-mcp-server/tools"
          , _promptsDirDomainData        = "pty-mcp-server/prompts"
          , _resourcesDirDomainData      = "pty-mcp-server/resources"
+         , _writableDirDomainData       = Nothing
          , _requestQueueDomainData      = reqQ
          , _responseQueueDomainData     = resQ
          , _notificationQueueDomainData = notQ
          , _commandQueueDomainData      = cmdQ
          , _cmdRunQueueDomainData       = cmdRunQ
+         , _fileSystemQueueDomainData   = fileSystemQ
          , _watchQueueDomainData        = watchQ
          , _procspawnQueueDomainData    = procQ
          , _socketQueueDomainData       = socketQ
