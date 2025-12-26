@@ -1194,19 +1194,19 @@ makeLenses ''ReadFileFileSystemCommandData
 
 -- |
 --
-data DirListFileSystemCommandData =
-  DirListFileSystemCommandData {
-    _jsonrpcDirListFileSystemCommandData   :: JsonRpcRequest
-  , _argumentsDirListFileSystemCommandData :: RawJsonByteString
+data ListDirFileSystemCommandData =
+  ListDirFileSystemCommandData {
+    _jsonrpcListDirFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsListDirFileSystemCommandData :: RawJsonByteString
   } deriving (Show, Read, Eq)
 
-makeLenses ''DirListFileSystemCommandData
+makeLenses ''ListDirFileSystemCommandData
 
 -- |
 --
 data FileSystemCommand =
     EchoFileSystemCommand EchoFileSystemCommandData
-  | DirListFileSystemCommand DirListFileSystemCommandData
+  | ListDirFileSystemCommand ListDirFileSystemCommandData
   | ReadFileFileSystemCommand ReadFileFileSystemCommandData
   | WriteFileFileSystemCommand WriteFileFileSystemCommandData
   deriving (Show, Read, Eq)
@@ -1215,7 +1215,7 @@ data FileSystemCommand =
 --
 getJsonRpcFileSystemCommand :: FileSystemCommand -> JsonRpcRequest
 getJsonRpcFileSystemCommand (EchoFileSystemCommand d)      = d^.jsonrpcEchoFileSystemCommandData
-getJsonRpcFileSystemCommand (DirListFileSystemCommand d)   = d^.jsonrpcDirListFileSystemCommandData
+getJsonRpcFileSystemCommand (ListDirFileSystemCommand d)   = d^.jsonrpcListDirFileSystemCommandData
 getJsonRpcFileSystemCommand (ReadFileFileSystemCommand d)  = d^.jsonrpcReadFileFileSystemCommandData
 getJsonRpcFileSystemCommand (WriteFileFileSystemCommand d) = d^.jsonrpcWriteFileFileSystemCommandData
 
