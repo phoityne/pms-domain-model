@@ -1519,7 +1519,7 @@ data DomainData = DomainData {
   , _toolsDirDomainData          :: String
   , _promptsDirDomainData        :: String
   , _resourcesDirDomainData      :: String
-  , _writableDirDomainData       :: Maybe String
+  , _sandboxDirDomainData       :: Maybe String
   , _requestQueueDomainData      :: TQueue McpRequest
   , _responseQueueDomainData     :: TQueue McpResponse
   , _notificationQueueDomainData :: TQueue McpNotification
@@ -1564,7 +1564,7 @@ defaultDomainData = do
          , _toolsDirDomainData          = "pty-mcp-server/tools"
          , _promptsDirDomainData        = "pty-mcp-server/prompts"
          , _resourcesDirDomainData      = "pty-mcp-server/resources"
-         , _writableDirDomainData       = Nothing
+         , _sandboxDirDomainData       = Nothing
          , _requestQueueDomainData      = reqQ
          , _responseQueueDomainData     = resQ
          , _notificationQueueDomainData = notQ
