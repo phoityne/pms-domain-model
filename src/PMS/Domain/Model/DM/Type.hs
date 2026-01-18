@@ -522,7 +522,7 @@ makeLenses ''McpInitializeResponseResultServerInfo
 instance Default McpInitializeResponseResultServerInfo where
   def = McpInitializeResponseResultServerInfo {
         _nameMcpInitializeResponseResultServerInfo = "pty-mcp-server"
-      , _versionMcpInitializeResponseResultServerInfo = "0.0.4"
+      , _versionMcpInitializeResponseResultServerInfo = "0.1.6.0"
       }
 
 -- |
@@ -1174,6 +1174,26 @@ makeLenses ''EchoFileSystemCommandData
 
 -- |
 --
+data ListDirFileSystemCommandData =
+  ListDirFileSystemCommandData {
+    _jsonrpcListDirFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsListDirFileSystemCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''ListDirFileSystemCommandData
+
+-- |
+--
+data MakeDirFileSystemCommandData =
+  MakeDirFileSystemCommandData {
+    _jsonrpcMakeDirFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsMakeDirFileSystemCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''MakeDirFileSystemCommandData
+
+-- |
+--
 data WriteFileFileSystemCommandData =
   WriteFileFileSystemCommandData {
     _jsonrpcWriteFileFileSystemCommandData   :: JsonRpcRequest
@@ -1194,19 +1214,10 @@ makeLenses ''ReadFileFileSystemCommandData
 
 -- |
 --
-data ListDirFileSystemCommandData =
-  ListDirFileSystemCommandData {
-    _jsonrpcListDirFileSystemCommandData   :: JsonRpcRequest
-  , _argumentsListDirFileSystemCommandData :: RawJsonByteString
-  } deriving (Show, Read, Eq)
-
-makeLenses ''ListDirFileSystemCommandData
-
--- |
---
 data FileSystemCommand =
     EchoFileSystemCommand EchoFileSystemCommandData
   | ListDirFileSystemCommand ListDirFileSystemCommandData
+  | MakeDirFileSystemCommand MakeDirFileSystemCommandData
   | ReadFileFileSystemCommand ReadFileFileSystemCommandData
   | WriteFileFileSystemCommand WriteFileFileSystemCommandData
   deriving (Show, Read, Eq)
@@ -1216,6 +1227,7 @@ data FileSystemCommand =
 getJsonRpcFileSystemCommand :: FileSystemCommand -> JsonRpcRequest
 getJsonRpcFileSystemCommand (EchoFileSystemCommand d)      = d^.jsonrpcEchoFileSystemCommandData
 getJsonRpcFileSystemCommand (ListDirFileSystemCommand d)   = d^.jsonrpcListDirFileSystemCommandData
+getJsonRpcFileSystemCommand (MakeDirFileSystemCommand d)   = d^.jsonrpcMakeDirFileSystemCommandData
 getJsonRpcFileSystemCommand (ReadFileFileSystemCommand d)  = d^.jsonrpcReadFileFileSystemCommandData
 getJsonRpcFileSystemCommand (WriteFileFileSystemCommand d) = d^.jsonrpcWriteFileFileSystemCommandData
 

@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.1.4.0 -- 2026-01-31
+
+* Add file system make-directory tools.
+
 ## 0.1.3.0 -- 2025-12-31
 
 * Add file system tools.
