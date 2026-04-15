@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.1.5.0 -- 2026-04-30
+
+* Support timeout configuration.
+
 ## 0.1.4.0 -- 2026-01-31
 
 * Add file system make-directory tools.

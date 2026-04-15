@@ -1545,6 +1545,7 @@ data DomainData = DomainData {
   , _promptsDomainData           :: [String]
   , _invalidCharsDomainData      :: [String]
   , _invalidCmdsDomainData       :: [String]
+  , _timeoutMicrosecDomainData   :: Int
   }
 
 makeLenses ''DomainData
@@ -1590,6 +1591,7 @@ defaultDomainData = do
          , _promptsDomainData           = def
          , _invalidCharsDomainData      = def
          , _invalidCmdsDomainData       = def
+         , _timeoutMicrosecDomainData   = 30 * 1000 * 1000
          }
 
 -- |
