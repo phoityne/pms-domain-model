@@ -1313,6 +1313,25 @@ makeLenses ''ProcTerminateCommandData
 
 -- |
 --
+data ProcAsyncReadCommandData =
+  ProcAsyncReadCommandData {
+    _jsonrpcProcAsyncReadCommandData :: JsonRpcRequest
+  } deriving (Show, Read, Eq)
+
+makeLenses ''ProcAsyncReadCommandData
+
+-- |
+--
+data ProcAsyncWriteCommandData =
+  ProcAsyncWriteCommandData {
+    _jsonrpcProcAsyncWriteCommandData   :: JsonRpcRequest
+  , _argumentsProcAsyncWriteCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''ProcAsyncWriteCommandData
+
+-- |
+--
 data ProcMessageCommandData =
   ProcMessageCommandData {
     _jsonrpcProcMessageCommandData   :: JsonRpcRequest
@@ -1328,6 +1347,8 @@ data ProcSpawnCommand =
   | ProcRunCommand       ProcRunCommandData
   | ProcTerminateCommand ProcTerminateCommandData
   | ProcMessageCommand   ProcMessageCommandData
+  | ProcAsyncReadCommand  ProcAsyncReadCommandData
+  | ProcAsyncWriteCommand ProcAsyncWriteCommandData
   deriving (Show, Read, Eq)
 
 -- |
@@ -1337,6 +1358,8 @@ getJsonRpcProcSpawnCommand (ProcEchoCommand      d) = d^.jsonrpcProcEchoCommandD
 getJsonRpcProcSpawnCommand (ProcRunCommand       d) = d^.jsonrpcProcRunCommandData
 getJsonRpcProcSpawnCommand (ProcTerminateCommand d) = d^.jsonrpcProcTerminateCommandData
 getJsonRpcProcSpawnCommand (ProcMessageCommand   d) = d^.jsonrpcProcMessageCommandData
+getJsonRpcProcSpawnCommand (ProcAsyncReadCommand  d) = d^.jsonrpcProcAsyncReadCommandData
+getJsonRpcProcSpawnCommand (ProcAsyncWriteCommand d) = d^.jsonrpcProcAsyncWriteCommandData
 
 
 --------------------------------------------------------------------------------

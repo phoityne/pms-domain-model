@@ -3,6 +3,7 @@
 ## 0.1.5.0 -- 2026-04-30
 
 * Support timeout configuration.
+* Add async read/write tools.
 
 ## 0.1.4.0 -- 2026-01-31
 
