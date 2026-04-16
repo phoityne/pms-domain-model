@@ -1313,22 +1313,22 @@ makeLenses ''ProcTerminateCommandData
 
 -- |
 --
-data ProcAsyncReadCommandData =
-  ProcAsyncReadCommandData {
-    _jsonrpcProcAsyncReadCommandData :: JsonRpcRequest
+data ProcReadCommandData =
+  ProcReadCommandData {
+    _jsonrpcProcReadCommandData :: JsonRpcRequest
   } deriving (Show, Read, Eq)
 
-makeLenses ''ProcAsyncReadCommandData
+makeLenses ''ProcReadCommandData
 
 -- |
 --
-data ProcAsyncWriteCommandData =
-  ProcAsyncWriteCommandData {
-    _jsonrpcProcAsyncWriteCommandData   :: JsonRpcRequest
-  , _argumentsProcAsyncWriteCommandData :: RawJsonByteString
+data ProcWriteCommandData =
+  ProcWriteCommandData {
+    _jsonrpcProcWriteCommandData   :: JsonRpcRequest
+  , _argumentsProcWriteCommandData :: RawJsonByteString
   } deriving (Show, Read, Eq)
 
-makeLenses ''ProcAsyncWriteCommandData
+makeLenses ''ProcWriteCommandData
 
 -- |
 --
@@ -1347,8 +1347,8 @@ data ProcSpawnCommand =
   | ProcRunCommand       ProcRunCommandData
   | ProcTerminateCommand ProcTerminateCommandData
   | ProcMessageCommand   ProcMessageCommandData
-  | ProcAsyncReadCommand  ProcAsyncReadCommandData
-  | ProcAsyncWriteCommand ProcAsyncWriteCommandData
+  | ProcReadCommand  ProcReadCommandData
+  | ProcWriteCommand ProcWriteCommandData
   deriving (Show, Read, Eq)
 
 -- |
@@ -1358,8 +1358,8 @@ getJsonRpcProcSpawnCommand (ProcEchoCommand      d) = d^.jsonrpcProcEchoCommandD
 getJsonRpcProcSpawnCommand (ProcRunCommand       d) = d^.jsonrpcProcRunCommandData
 getJsonRpcProcSpawnCommand (ProcTerminateCommand d) = d^.jsonrpcProcTerminateCommandData
 getJsonRpcProcSpawnCommand (ProcMessageCommand   d) = d^.jsonrpcProcMessageCommandData
-getJsonRpcProcSpawnCommand (ProcAsyncReadCommand  d) = d^.jsonrpcProcAsyncReadCommandData
-getJsonRpcProcSpawnCommand (ProcAsyncWriteCommand d) = d^.jsonrpcProcAsyncWriteCommandData
+getJsonRpcProcSpawnCommand (ProcReadCommand  d) = d^.jsonrpcProcReadCommandData
+getJsonRpcProcSpawnCommand (ProcWriteCommand d) = d^.jsonrpcProcWriteCommandData
 
 
 --------------------------------------------------------------------------------
