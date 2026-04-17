@@ -1315,7 +1315,8 @@ makeLenses ''ProcTerminateCommandData
 --
 data ProcReadCommandData =
   ProcReadCommandData {
-    _jsonrpcProcReadCommandData :: JsonRpcRequest
+    _jsonrpcProcReadCommandData   :: JsonRpcRequest
+  , _argumentsProcReadCommandData :: RawJsonByteString
   } deriving (Show, Read, Eq)
 
 makeLenses ''ProcReadCommandData
