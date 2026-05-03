@@ -275,9 +275,6 @@ instance Default McpPromptsGetRequestData where
       }
 
 
-
-
-
 -- |
 --
 data McpResourcesTemplatesListRequestData =
@@ -342,8 +339,6 @@ instance Default McpResourcesReadRequestData where
       }
 
 
-
-
 -- |
 --
 data McpInitializedNotificationData =
@@ -391,7 +386,6 @@ instance Default McpCancelledNotificationData where
         _jsonrpcMcpCancelledNotificationData = def
       , _paramsMcpCancelledNotificationData  = def
       }
-
 
 
 -- |
@@ -658,8 +652,6 @@ instance Default McpToolsCallResponseData where
       }
 
 
-
-
 -- |
 --
 data McpPromptsListResponseResult =
@@ -742,9 +734,6 @@ instance Default McpPromptsGetResponseData where
       }
 
 
-
-
-
 -- |
 --
 data McpResourcesTemplatesListResponseResult =
@@ -776,7 +765,6 @@ instance Default McpResourcesTemplatesListResponseData where
         _jsonrpcMcpResourcesTemplatesListResponseData = def
       , _resultMcpResourcesTemplatesListResponseData = def
       }
-
 
 
 -- |
@@ -812,9 +800,6 @@ instance Default McpResourcesListResponseData where
       }
 
 
-
-
-
 -- |
 --
 data McpResourcesReadResponseResult =
@@ -846,8 +831,6 @@ instance Default McpResourcesReadResponseData where
         _jsonrpcMcpResourcesReadResponseData = def
       , _resultMcpResourcesReadResponseData = def
       }
-
-
 
 
 -- |
@@ -984,13 +967,13 @@ instance Default McpToolsListChangedNotificationData where
         _methodMcpToolsListChangedNotificationData = "notifications/tools/list_changed"
       , _paramsMcpToolsListChangedNotificationData = def
       }
-      
+
 
 -- |
 --
 data McpPromptsListChangedNotificationDataParams =
   McpPromptsListChangedNotificationDataParams {
-    _promptsMcpPromptsListChangedNotificationDataParams :: RawJsonByteString   -- prompts-list
+    _promptsMcpPromptsListChangedNotificationDataParams :: RawJsonByteString
   } deriving (Show, Read, Eq)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpPromptsListChangedNotificationDataParams", omitNothingFields = True} ''McpPromptsListChangedNotificationDataParams)
@@ -998,7 +981,7 @@ makeLenses ''McpPromptsListChangedNotificationDataParams
 
 instance Default McpPromptsListChangedNotificationDataParams where
   def = McpPromptsListChangedNotificationDataParams {
-        _promptsMcpPromptsListChangedNotificationDataParams = RawJsonByteString "[]"  -- prompts-list
+        _promptsMcpPromptsListChangedNotificationDataParams = RawJsonByteString "[]"
       }
 
 -- |
@@ -1019,13 +1002,11 @@ instance Default McpPromptsListChangedNotificationData where
       }
 
 
-
-
 -- |
 --
 data McpResourcesListChangedNotificationDataParams =
   McpResourcesListChangedNotificationDataParams {
-    _resourcesMcpResourcesListChangedNotificationDataParams :: RawJsonByteString  -- resources-list
+    _resourcesMcpResourcesListChangedNotificationDataParams :: RawJsonByteString
   } deriving (Show, Read, Eq)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "McpResourcesListChangedNotificationDataParams", omitNothingFields = True} ''McpResourcesListChangedNotificationDataParams)
@@ -1033,7 +1014,7 @@ makeLenses ''McpResourcesListChangedNotificationDataParams
 
 instance Default McpResourcesListChangedNotificationDataParams where
   def = McpResourcesListChangedNotificationDataParams {
-        _resourcesMcpResourcesListChangedNotificationDataParams = RawJsonByteString "[]"   -- resources-list
+        _resourcesMcpResourcesListChangedNotificationDataParams = RawJsonByteString "[]"
       }
 
 -- |
@@ -1277,7 +1258,6 @@ data WatchCommand =
   deriving (Show, Read, Eq)
 
 
-
 --------------------------------------------------------------------------------
 -- |
 --
@@ -1361,6 +1341,112 @@ getJsonRpcProcSpawnCommand (ProcTerminateCommand d) = d^.jsonrpcProcTerminateCom
 getJsonRpcProcSpawnCommand (ProcMessageCommand   d) = d^.jsonrpcProcMessageCommandData
 getJsonRpcProcSpawnCommand (ProcReadCommand  d) = d^.jsonrpcProcReadCommandData
 getJsonRpcProcSpawnCommand (ProcWriteCommand d) = d^.jsonrpcProcWriteCommandData
+
+
+--------------------------------------------------------------------------------
+-- |
+--
+data AgentProcessEchoCommandData =
+  AgentProcessEchoCommandData {
+    _jsonrpcAgentProcessEchoCommandData :: JsonRpcRequest
+  , _valueAgentProcessEchoCommandData   :: String
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentProcessEchoCommandData", omitNothingFields = True} ''AgentProcessEchoCommandData)
+makeLenses ''AgentProcessEchoCommandData
+
+instance Default AgentProcessEchoCommandData where
+  def = AgentProcessEchoCommandData {
+        _jsonrpcAgentProcessEchoCommandData = def
+      , _valueAgentProcessEchoCommandData   = def
+      }
+
+-- |
+--
+data AgentProcessRunCommandData =
+  AgentProcessRunCommandData {
+    _jsonrpcAgentProcessRunCommandData   :: JsonRpcRequest
+  , _nameAgentProcessRunCommandData      :: String
+  , _argumentsAgentProcessRunCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentProcessRunCommandData", omitNothingFields = True} ''AgentProcessRunCommandData)
+makeLenses ''AgentProcessRunCommandData
+
+instance Default AgentProcessRunCommandData where
+  def = AgentProcessRunCommandData {
+        _jsonrpcAgentProcessRunCommandData   = def
+      , _nameAgentProcessRunCommandData      = def
+      , _argumentsAgentProcessRunCommandData = def
+      }
+
+-- |
+--
+data AgentProcessTerminateCommandData =
+  AgentProcessTerminateCommandData {
+    _jsonrpcAgentProcessTerminateCommandData :: JsonRpcRequest
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentProcessTerminateCommandData", omitNothingFields = True} ''AgentProcessTerminateCommandData)
+makeLenses ''AgentProcessTerminateCommandData
+
+instance Default AgentProcessTerminateCommandData where
+  def = AgentProcessTerminateCommandData {
+        _jsonrpcAgentProcessTerminateCommandData = def
+      }
+
+-- |
+--
+data AgentProcessReadCommandData =
+  AgentProcessReadCommandData {
+    _jsonrpcAgentProcessReadCommandData   :: JsonRpcRequest
+  , _argumentsAgentProcessReadCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentProcessReadCommandData", omitNothingFields = True} ''AgentProcessReadCommandData)
+makeLenses ''AgentProcessReadCommandData
+
+instance Default AgentProcessReadCommandData where
+  def = AgentProcessReadCommandData {
+        _jsonrpcAgentProcessReadCommandData   = def
+      , _argumentsAgentProcessReadCommandData = def
+      }
+
+-- |
+--
+data AgentProcessWriteCommandData =
+  AgentProcessWriteCommandData {
+    _jsonrpcAgentProcessWriteCommandData   :: JsonRpcRequest
+  , _argumentsAgentProcessWriteCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentProcessWriteCommandData", omitNothingFields = True} ''AgentProcessWriteCommandData)
+makeLenses ''AgentProcessWriteCommandData
+
+instance Default AgentProcessWriteCommandData where
+  def = AgentProcessWriteCommandData {
+        _jsonrpcAgentProcessWriteCommandData   = def
+      , _argumentsAgentProcessWriteCommandData = def
+      }
+
+-- |
+--
+data AgentProcessCommand =
+    AgentProcessEchoCommand      AgentProcessEchoCommandData
+  | AgentProcessRunCommand       AgentProcessRunCommandData
+  | AgentProcessTerminateCommand AgentProcessTerminateCommandData
+  | AgentProcessReadCommand      AgentProcessReadCommandData
+  | AgentProcessWriteCommand     AgentProcessWriteCommandData
+  deriving (Show, Read, Eq)
+
+-- |
+--
+getJsonRpcAgentProcessCommand :: AgentProcessCommand -> JsonRpcRequest
+getJsonRpcAgentProcessCommand (AgentProcessEchoCommand      d) = d^.jsonrpcAgentProcessEchoCommandData
+getJsonRpcAgentProcessCommand (AgentProcessRunCommand       d) = d^.jsonrpcAgentProcessRunCommandData
+getJsonRpcAgentProcessCommand (AgentProcessTerminateCommand d) = d^.jsonrpcAgentProcessTerminateCommandData
+getJsonRpcAgentProcessCommand (AgentProcessReadCommand      d) = d^.jsonrpcAgentProcessReadCommandData
+getJsonRpcAgentProcessCommand (AgentProcessWriteCommand     d) = d^.jsonrpcAgentProcessWriteCommandData
 
 
 --------------------------------------------------------------------------------
@@ -1550,26 +1636,28 @@ getJsonRpcSerialCommand (SerialMessageCommand d) = d^.jsonrpcSerialMessageComman
 -- |
 --
 data DomainData = DomainData {
-    _logDirDomainData            :: Maybe String
-  , _logLevelDomainData          :: LogLevel
-  , _toolsDirDomainData          :: String
-  , _promptsDirDomainData        :: String
-  , _resourcesDirDomainData      :: String
-  , _sandboxDirDomainData       :: Maybe String
-  , _requestQueueDomainData      :: TQueue McpRequest
-  , _responseQueueDomainData     :: TQueue McpResponse
-  , _notificationQueueDomainData :: TQueue McpNotification
-  , _commandQueueDomainData      :: TQueue Command
-  , _cmdRunQueueDomainData       :: TQueue CmdRunCommand
-  , _fileSystemQueueDomainData   :: TQueue FileSystemCommand
-  , _watchQueueDomainData        :: TQueue WatchCommand
-  , _procspawnQueueDomainData    :: TQueue ProcSpawnCommand
-  , _socketQueueDomainData       :: TQueue SocketCommand
-  , _serialQueueDomainData       :: TQueue SerialCommand
-  , _promptsDomainData           :: [String]
-  , _invalidCharsDomainData      :: [String]
-  , _invalidCmdsDomainData       :: [String]
-  , _timeoutMicrosecDomainData   :: Int
+    _logDirDomainData              :: Maybe String
+  , _logLevelDomainData            :: LogLevel
+  , _toolsDirDomainData            :: String
+  , _promptsDirDomainData          :: String
+  , _resourcesDirDomainData        :: String
+  , _sandboxDirDomainData          :: Maybe String
+  , _requestQueueDomainData        :: TQueue McpRequest
+  , _responseQueueDomainData       :: TQueue McpResponse
+  , _notificationQueueDomainData   :: TQueue McpNotification
+  , _commandQueueDomainData        :: TQueue Command
+  , _cmdRunQueueDomainData         :: TQueue CmdRunCommand
+  , _fileSystemQueueDomainData     :: TQueue FileSystemCommand
+  , _watchQueueDomainData          :: TQueue WatchCommand
+  , _procspawnQueueDomainData      :: TQueue ProcSpawnCommand
+  , _agentProcessQueueDomainData   :: TQueue AgentProcessCommand
+  , _socketQueueDomainData         :: TQueue SocketCommand
+  , _serialQueueDomainData         :: TQueue SerialCommand
+  , _promptsDomainData             :: [String]
+  , _invalidCharsDomainData        :: [String]
+  , _invalidCmdsDomainData         :: [String]
+  , _allowedAgentCmdsDomainData    :: [String]   -- ^ whitelist for agent-proc-run; empty means deny all
+  , _timeoutMicrosecDomainData     :: Int
   }
 
 makeLenses ''DomainData
@@ -1585,23 +1673,24 @@ defaultDomainData = do
   hSetEncoding stderr utf8
   hSetBuffering stderr LineBuffering
 
-  reqQ <- newTQueueIO
-  resQ <- newTQueueIO
-  notQ <- newTQueueIO
-  cmdQ <- newTQueueIO
-  cmdRunQ <- newTQueueIO
-  fileSystemQ <- newTQueueIO
-  watchQ  <- newTQueueIO
-  procQ   <- newTQueueIO
-  socketQ   <- newTQueueIO
-  serialQ   <- newTQueueIO
+  reqQ         <- newTQueueIO
+  resQ         <- newTQueueIO
+  notQ         <- newTQueueIO
+  cmdQ         <- newTQueueIO
+  cmdRunQ      <- newTQueueIO
+  fileSystemQ  <- newTQueueIO
+  watchQ       <- newTQueueIO
+  procQ        <- newTQueueIO
+  agentProcQ   <- newTQueueIO
+  socketQ      <- newTQueueIO
+  serialQ      <- newTQueueIO
   return DomainData {
            _logDirDomainData            = Nothing
          , _logLevelDomainData          = LevelDebug
          , _toolsDirDomainData          = "pty-mcp-server/tools"
          , _promptsDirDomainData        = "pty-mcp-server/prompts"
          , _resourcesDirDomainData      = "pty-mcp-server/resources"
-         , _sandboxDirDomainData       = Nothing
+         , _sandboxDirDomainData        = Nothing
          , _requestQueueDomainData      = reqQ
          , _responseQueueDomainData     = resQ
          , _notificationQueueDomainData = notQ
@@ -1610,11 +1699,13 @@ defaultDomainData = do
          , _fileSystemQueueDomainData   = fileSystemQ
          , _watchQueueDomainData        = watchQ
          , _procspawnQueueDomainData    = procQ
+         , _agentProcessQueueDomainData = agentProcQ
          , _socketQueueDomainData       = socketQ
          , _serialQueueDomainData       = serialQ
          , _promptsDomainData           = def
          , _invalidCharsDomainData      = def
          , _invalidCmdsDomainData       = def
+         , _allowedAgentCmdsDomainData  = def     -- deny all by default
          , _timeoutMicrosecDomainData   = 30 * 1000 * 1000
          }
 
@@ -1622,6 +1713,3 @@ defaultDomainData = do
 --
 type ErrorData = String
 type DomainContext a = DomainData -> IO a
-
-
-

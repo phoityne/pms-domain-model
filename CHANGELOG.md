@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.1.6.0 -- 2026-05-02
+
+* Add agentAllowedCmds whitelist support for agent-proc-run.
+
 ## 0.1.5.0 -- 2026-04-30
 
 * Support timeout configuration.
