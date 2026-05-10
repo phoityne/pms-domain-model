@@ -1194,6 +1194,47 @@ data ReadFileFileSystemCommandData =
 makeLenses ''ReadFileFileSystemCommandData
 
 -- |
+-- Command data for the pms-patch-file MCP tool.
+-- Carries the JSON-RPC request envelope and raw JSON arguments (path + patch).
+data PatchFileFileSystemCommandData =
+  PatchFileFileSystemCommandData {
+    _jsonrpcPatchFileFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsPatchFileFileSystemCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''PatchFileFileSystemCommandData
+
+-- |
+-- Command data for the pms-file-info MCP tool.
+data FileInfoFileSystemCommandData =
+  FileInfoFileSystemCommandData {
+    _jsonrpcFileInfoFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsFileInfoFileSystemCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''FileInfoFileSystemCommandData
+
+-- |
+-- Command data for the pms-grep-file MCP tool.
+data GrepFileFileSystemCommandData =
+  GrepFileFileSystemCommandData {
+    _jsonrpcGrepFileFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsGrepFileFileSystemCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''GrepFileFileSystemCommandData
+
+-- |
+-- Command data for the pms-replace-file MCP tool.
+data ReplaceFileFileSystemCommandData =
+  ReplaceFileFileSystemCommandData {
+    _jsonrpcReplaceFileFileSystemCommandData   :: JsonRpcRequest
+  , _argumentsReplaceFileFileSystemCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+makeLenses ''ReplaceFileFileSystemCommandData
+
+-- |
 --
 data FileSystemCommand =
     EchoFileSystemCommand EchoFileSystemCommandData
@@ -1201,6 +1242,10 @@ data FileSystemCommand =
   | MakeDirFileSystemCommand MakeDirFileSystemCommandData
   | ReadFileFileSystemCommand ReadFileFileSystemCommandData
   | WriteFileFileSystemCommand WriteFileFileSystemCommandData
+  | PatchFileFileSystemCommand PatchFileFileSystemCommandData  -- ^ Apply a unified diff patch to a file
+  | FileInfoFileSystemCommand FileInfoFileSystemCommandData    -- ^ Get file info (line count, byte size)
+  | GrepFileFileSystemCommand GrepFileFileSystemCommandData    -- ^ Grep file with regex, return JSON hits
+  | ReplaceFileFileSystemCommand ReplaceFileFileSystemCommandData  -- ^ Replace literal text in a file
   deriving (Show, Read, Eq)
 
 -- |
@@ -1211,6 +1256,10 @@ getJsonRpcFileSystemCommand (ListDirFileSystemCommand d)   = d^.jsonrpcListDirFi
 getJsonRpcFileSystemCommand (MakeDirFileSystemCommand d)   = d^.jsonrpcMakeDirFileSystemCommandData
 getJsonRpcFileSystemCommand (ReadFileFileSystemCommand d)  = d^.jsonrpcReadFileFileSystemCommandData
 getJsonRpcFileSystemCommand (WriteFileFileSystemCommand d) = d^.jsonrpcWriteFileFileSystemCommandData
+getJsonRpcFileSystemCommand (PatchFileFileSystemCommand d) = d^.jsonrpcPatchFileFileSystemCommandData
+getJsonRpcFileSystemCommand (FileInfoFileSystemCommand d)  = d^.jsonrpcFileInfoFileSystemCommandData
+getJsonRpcFileSystemCommand (GrepFileFileSystemCommand d)  = d^.jsonrpcGrepFileFileSystemCommandData
+getJsonRpcFileSystemCommand (ReplaceFileFileSystemCommand d) = d^.jsonrpcReplaceFileFileSystemCommandData
 
 --------------------------------------------------------------------------------
 -- |
