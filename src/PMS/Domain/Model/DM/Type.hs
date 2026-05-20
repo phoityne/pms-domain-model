@@ -1501,6 +1501,294 @@ getJsonRpcAgentProcessCommand (AgentProcessWriteCommand     d) = d^.jsonrpcAgent
 --------------------------------------------------------------------------------
 -- |
 --
+data AgentSocketEchoCommandData =
+  AgentSocketEchoCommandData {
+    _jsonrpcAgentSocketEchoCommandData :: JsonRpcRequest
+  , _valueAgentSocketEchoCommandData   :: String
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSocketEchoCommandData", omitNothingFields = True} ''AgentSocketEchoCommandData)
+makeLenses ''AgentSocketEchoCommandData
+
+instance Default AgentSocketEchoCommandData where
+  def = AgentSocketEchoCommandData {
+        _jsonrpcAgentSocketEchoCommandData = def
+      , _valueAgentSocketEchoCommandData   = def
+      }
+
+-- |
+--
+data AgentSocketOpenCommandData =
+  AgentSocketOpenCommandData {
+    _jsonrpcAgentSocketOpenCommandData   :: JsonRpcRequest
+  , _nameAgentSocketOpenCommandData      :: String
+  , _argumentsAgentSocketOpenCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSocketOpenCommandData", omitNothingFields = True} ''AgentSocketOpenCommandData)
+makeLenses ''AgentSocketOpenCommandData
+
+instance Default AgentSocketOpenCommandData where
+  def = AgentSocketOpenCommandData {
+        _jsonrpcAgentSocketOpenCommandData   = def
+      , _nameAgentSocketOpenCommandData      = def
+      , _argumentsAgentSocketOpenCommandData = def
+      }
+
+-- |
+--
+data AgentSocketCloseCommandData =
+  AgentSocketCloseCommandData {
+    _jsonrpcAgentSocketCloseCommandData :: JsonRpcRequest
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSocketCloseCommandData", omitNothingFields = True} ''AgentSocketCloseCommandData)
+makeLenses ''AgentSocketCloseCommandData
+
+instance Default AgentSocketCloseCommandData where
+  def = AgentSocketCloseCommandData {
+        _jsonrpcAgentSocketCloseCommandData = def
+      }
+
+-- |
+--
+data AgentSocketReadCommandData =
+  AgentSocketReadCommandData {
+    _jsonrpcAgentSocketReadCommandData   :: JsonRpcRequest
+  , _argumentsAgentSocketReadCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSocketReadCommandData", omitNothingFields = True} ''AgentSocketReadCommandData)
+makeLenses ''AgentSocketReadCommandData
+
+instance Default AgentSocketReadCommandData where
+  def = AgentSocketReadCommandData {
+        _jsonrpcAgentSocketReadCommandData   = def
+      , _argumentsAgentSocketReadCommandData = def
+      }
+
+-- |
+--
+data AgentSocketWriteCommandData =
+  AgentSocketWriteCommandData {
+    _jsonrpcAgentSocketWriteCommandData   :: JsonRpcRequest
+  , _argumentsAgentSocketWriteCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSocketWriteCommandData", omitNothingFields = True} ''AgentSocketWriteCommandData)
+makeLenses ''AgentSocketWriteCommandData
+
+instance Default AgentSocketWriteCommandData where
+  def = AgentSocketWriteCommandData {
+        _jsonrpcAgentSocketWriteCommandData   = def
+      , _argumentsAgentSocketWriteCommandData = def
+      }
+
+-- |
+--
+data AgentSocketReadByteCommandData =
+  AgentSocketReadByteCommandData {
+    _jsonrpcAgentSocketReadByteCommandData   :: JsonRpcRequest
+  , _argumentsAgentSocketReadByteCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSocketReadByteCommandData", omitNothingFields = True} ''AgentSocketReadByteCommandData)
+makeLenses ''AgentSocketReadByteCommandData
+
+instance Default AgentSocketReadByteCommandData where
+  def = AgentSocketReadByteCommandData {
+        _jsonrpcAgentSocketReadByteCommandData   = def
+      , _argumentsAgentSocketReadByteCommandData = def
+      }
+
+-- |
+--
+data AgentSocketWriteByteCommandData =
+  AgentSocketWriteByteCommandData {
+    _jsonrpcAgentSocketWriteByteCommandData   :: JsonRpcRequest
+  , _argumentsAgentSocketWriteByteCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSocketWriteByteCommandData", omitNothingFields = True} ''AgentSocketWriteByteCommandData)
+makeLenses ''AgentSocketWriteByteCommandData
+
+instance Default AgentSocketWriteByteCommandData where
+  def = AgentSocketWriteByteCommandData {
+        _jsonrpcAgentSocketWriteByteCommandData   = def
+      , _argumentsAgentSocketWriteByteCommandData = def
+      }
+
+-- |
+--
+data AgentSocketCommand =
+    AgentSocketEchoCommand      AgentSocketEchoCommandData
+  | AgentSocketOpenCommand      AgentSocketOpenCommandData
+  | AgentSocketCloseCommand     AgentSocketCloseCommandData
+  | AgentSocketReadCommand      AgentSocketReadCommandData
+  | AgentSocketWriteCommand     AgentSocketWriteCommandData
+  | AgentSocketReadByteCommand  AgentSocketReadByteCommandData
+  | AgentSocketWriteByteCommand AgentSocketWriteByteCommandData
+  deriving (Show, Read, Eq)
+
+-- |
+--
+getJsonRpcAgentSocketCommand :: AgentSocketCommand -> JsonRpcRequest
+getJsonRpcAgentSocketCommand (AgentSocketEchoCommand      d) = d^.jsonrpcAgentSocketEchoCommandData
+getJsonRpcAgentSocketCommand (AgentSocketOpenCommand      d) = d^.jsonrpcAgentSocketOpenCommandData
+getJsonRpcAgentSocketCommand (AgentSocketCloseCommand     d) = d^.jsonrpcAgentSocketCloseCommandData
+getJsonRpcAgentSocketCommand (AgentSocketReadCommand      d) = d^.jsonrpcAgentSocketReadCommandData
+getJsonRpcAgentSocketCommand (AgentSocketWriteCommand     d) = d^.jsonrpcAgentSocketWriteCommandData
+getJsonRpcAgentSocketCommand (AgentSocketReadByteCommand  d) = d^.jsonrpcAgentSocketReadByteCommandData
+getJsonRpcAgentSocketCommand (AgentSocketWriteByteCommand d) = d^.jsonrpcAgentSocketWriteByteCommandData
+
+
+--------------------------------------------------------------------------------
+-- |
+--
+data AgentSerialEchoCommandData =
+  AgentSerialEchoCommandData {
+    _jsonrpcAgentSerialEchoCommandData :: JsonRpcRequest
+  , _valueAgentSerialEchoCommandData   :: String
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSerialEchoCommandData", omitNothingFields = True} ''AgentSerialEchoCommandData)
+makeLenses ''AgentSerialEchoCommandData
+
+instance Default AgentSerialEchoCommandData where
+  def = AgentSerialEchoCommandData {
+        _jsonrpcAgentSerialEchoCommandData = def
+      , _valueAgentSerialEchoCommandData   = def
+      }
+
+-- |
+--
+data AgentSerialOpenCommandData =
+  AgentSerialOpenCommandData {
+    _jsonrpcAgentSerialOpenCommandData   :: JsonRpcRequest
+  , _nameAgentSerialOpenCommandData      :: String
+  , _argumentsAgentSerialOpenCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSerialOpenCommandData", omitNothingFields = True} ''AgentSerialOpenCommandData)
+makeLenses ''AgentSerialOpenCommandData
+
+instance Default AgentSerialOpenCommandData where
+  def = AgentSerialOpenCommandData {
+        _jsonrpcAgentSerialOpenCommandData   = def
+      , _nameAgentSerialOpenCommandData      = def
+      , _argumentsAgentSerialOpenCommandData = def
+      }
+
+-- |
+--
+data AgentSerialCloseCommandData =
+  AgentSerialCloseCommandData {
+    _jsonrpcAgentSerialCloseCommandData :: JsonRpcRequest
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSerialCloseCommandData", omitNothingFields = True} ''AgentSerialCloseCommandData)
+makeLenses ''AgentSerialCloseCommandData
+
+instance Default AgentSerialCloseCommandData where
+  def = AgentSerialCloseCommandData {
+        _jsonrpcAgentSerialCloseCommandData = def
+      }
+
+-- |
+--
+data AgentSerialReadCommandData =
+  AgentSerialReadCommandData {
+    _jsonrpcAgentSerialReadCommandData   :: JsonRpcRequest
+  , _argumentsAgentSerialReadCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSerialReadCommandData", omitNothingFields = True} ''AgentSerialReadCommandData)
+makeLenses ''AgentSerialReadCommandData
+
+instance Default AgentSerialReadCommandData where
+  def = AgentSerialReadCommandData {
+        _jsonrpcAgentSerialReadCommandData   = def
+      , _argumentsAgentSerialReadCommandData = def
+      }
+
+-- |
+--
+data AgentSerialWriteCommandData =
+  AgentSerialWriteCommandData {
+    _jsonrpcAgentSerialWriteCommandData   :: JsonRpcRequest
+  , _argumentsAgentSerialWriteCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSerialWriteCommandData", omitNothingFields = True} ''AgentSerialWriteCommandData)
+makeLenses ''AgentSerialWriteCommandData
+
+instance Default AgentSerialWriteCommandData where
+  def = AgentSerialWriteCommandData {
+        _jsonrpcAgentSerialWriteCommandData   = def
+      , _argumentsAgentSerialWriteCommandData = def
+      }
+
+-- |
+--
+data AgentSerialReadByteCommandData =
+  AgentSerialReadByteCommandData {
+    _jsonrpcAgentSerialReadByteCommandData   :: JsonRpcRequest
+  , _argumentsAgentSerialReadByteCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSerialReadByteCommandData", omitNothingFields = True} ''AgentSerialReadByteCommandData)
+makeLenses ''AgentSerialReadByteCommandData
+
+instance Default AgentSerialReadByteCommandData where
+  def = AgentSerialReadByteCommandData {
+        _jsonrpcAgentSerialReadByteCommandData   = def
+      , _argumentsAgentSerialReadByteCommandData = def
+      }
+
+-- |
+--
+data AgentSerialWriteByteCommandData =
+  AgentSerialWriteByteCommandData {
+    _jsonrpcAgentSerialWriteByteCommandData   :: JsonRpcRequest
+  , _argumentsAgentSerialWriteByteCommandData :: RawJsonByteString
+  } deriving (Show, Read, Eq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = dropDataName "AgentSerialWriteByteCommandData", omitNothingFields = True} ''AgentSerialWriteByteCommandData)
+makeLenses ''AgentSerialWriteByteCommandData
+
+instance Default AgentSerialWriteByteCommandData where
+  def = AgentSerialWriteByteCommandData {
+        _jsonrpcAgentSerialWriteByteCommandData   = def
+      , _argumentsAgentSerialWriteByteCommandData = def
+      }
+
+-- |
+--
+data AgentSerialCommand =
+    AgentSerialEchoCommand      AgentSerialEchoCommandData
+  | AgentSerialOpenCommand      AgentSerialOpenCommandData
+  | AgentSerialCloseCommand     AgentSerialCloseCommandData
+  | AgentSerialReadCommand      AgentSerialReadCommandData
+  | AgentSerialWriteCommand     AgentSerialWriteCommandData
+  | AgentSerialReadByteCommand  AgentSerialReadByteCommandData
+  | AgentSerialWriteByteCommand AgentSerialWriteByteCommandData
+  deriving (Show, Read, Eq)
+
+-- |
+--
+getJsonRpcAgentSerialCommand :: AgentSerialCommand -> JsonRpcRequest
+getJsonRpcAgentSerialCommand (AgentSerialEchoCommand      d) = d^.jsonrpcAgentSerialEchoCommandData
+getJsonRpcAgentSerialCommand (AgentSerialOpenCommand      d) = d^.jsonrpcAgentSerialOpenCommandData
+getJsonRpcAgentSerialCommand (AgentSerialCloseCommand     d) = d^.jsonrpcAgentSerialCloseCommandData
+getJsonRpcAgentSerialCommand (AgentSerialReadCommand      d) = d^.jsonrpcAgentSerialReadCommandData
+getJsonRpcAgentSerialCommand (AgentSerialWriteCommand     d) = d^.jsonrpcAgentSerialWriteCommandData
+getJsonRpcAgentSerialCommand (AgentSerialReadByteCommand  d) = d^.jsonrpcAgentSerialReadByteCommandData
+getJsonRpcAgentSerialCommand (AgentSerialWriteByteCommand d) = d^.jsonrpcAgentSerialWriteByteCommandData
+
+
+--------------------------------------------------------------------------------
+-- |
+--
 data SocketEchoCommandData =
   SocketEchoCommandData {
     _jsonrpcSocketEchoCommandData :: JsonRpcRequest
@@ -1700,12 +1988,16 @@ data DomainData = DomainData {
   , _watchQueueDomainData          :: TQueue WatchCommand
   , _procspawnQueueDomainData      :: TQueue ProcSpawnCommand
   , _agentProcessQueueDomainData   :: TQueue AgentProcessCommand
+  , _agentSocketQueueDomainData    :: TQueue AgentSocketCommand
+  , _agentSerialQueueDomainData    :: TQueue AgentSerialCommand
   , _socketQueueDomainData         :: TQueue SocketCommand
   , _serialQueueDomainData         :: TQueue SerialCommand
   , _promptsDomainData             :: [String]
   , _invalidCharsDomainData        :: [String]
   , _invalidCmdsDomainData         :: [String]
   , _allowedAgentCmdsDomainData    :: [String]   -- ^ whitelist for agent-proc-run; empty means deny all
+  , _sandboxNetworksDomainData     :: [String]   -- ^ CIDR list for agent-socket-open; empty = deny all
+  , _invalidPatternsDomainData     :: [String]   -- ^ regex blacklist for write commands; empty = allow all
   , _timeoutMicrosecDomainData     :: Int
   }
 
@@ -1731,6 +2023,8 @@ defaultDomainData = do
   watchQ       <- newTQueueIO
   procQ        <- newTQueueIO
   agentProcQ   <- newTQueueIO
+  agentSocketQ <- newTQueueIO
+  agentSerialQ <- newTQueueIO
   socketQ      <- newTQueueIO
   serialQ      <- newTQueueIO
   return DomainData {
@@ -1749,12 +2043,16 @@ defaultDomainData = do
          , _watchQueueDomainData        = watchQ
          , _procspawnQueueDomainData    = procQ
          , _agentProcessQueueDomainData = agentProcQ
+         , _agentSocketQueueDomainData  = agentSocketQ
+         , _agentSerialQueueDomainData  = agentSerialQ
          , _socketQueueDomainData       = socketQ
          , _serialQueueDomainData       = serialQ
          , _promptsDomainData           = def
          , _invalidCharsDomainData      = def
          , _invalidCmdsDomainData       = def
          , _allowedAgentCmdsDomainData  = def     -- deny all by default
+         , _sandboxNetworksDomainData   = def      -- deny all by default
+         , _invalidPatternsDomainData   = def      -- allow all by default
          , _timeoutMicrosecDomainData   = 30 * 1000 * 1000
          }
 

@@ -20,7 +20,7 @@ name:               pms-domain-model
 -- PVP summary:     +-+------- breaking API changes
 --                  | | +----- non-breaking API additions
 --                  | | | +--- code changes with no API change
-version:            0.1.7.0
+version:            0.1.8.0
 
 -- A short (one-line) description of the package.
 synopsis:           pms-domain-model
@@ -85,7 +85,11 @@ library
                       stm,
                       async,
                       strip-ansi-escape,
-                      safe-exceptions
+                      safe-exceptions,
+                      base16-bytestring,
+                      regex-tdfa,
+                      iproute,
+                      network
                     
     -- Directories containing source files.
     hs-source-dirs:   src
@@ -126,6 +130,7 @@ test-suite pms-domain-model-test
                       async,
                       lens,
                       aeson,
+                      bytestring,
                       pms-domain-model
                       
     build-tool-depends:

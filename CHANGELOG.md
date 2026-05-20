@@ -1,5 +1,9 @@
 # Revision history for pms-domain-model
 
+## 0.1.8.0 -- 2026-05-31
+
+* Added pms-infra-agent-socket, pms-infra-agent-serial.
+
 ## 0.1.7.0 -- 2026-05-15
 
 * Add file system tools.
